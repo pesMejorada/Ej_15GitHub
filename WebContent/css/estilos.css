@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+ body {
+ background: #CEF6F5;
+ }
+ form {
+  
+  margin: 0 auto;
+  margin-top: 3em;
+  width: 50%;
+ }
+ .texto {
+   margin: .5em;   
+   margin-left: 1em;
+ }
+ .cuadro {
+   margin-left: 2em;
+   margin-bottom: 1.3em;
+ }

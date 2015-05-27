@@ -1,6 +1,7 @@
 package es.curso.dispatchers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
+
 import es.curso.controllers.ejb.DarAltaClienteControllerEjb;
+import es.curso.controllers.ejb.ListarTodosControllerEjb;
 import es.curso.model.entity.Cliente;
 
 /**
@@ -41,24 +45,30 @@ public class TiendaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String action = request.getPathInfo().substring(1);
 		 request.setCharacterEncoding("UTF-8");
+		 String titulo = "Sin título";
 		 switch(action){
 		     case  "listarTodos":  // se invocará al controllador adecuado
 		    	                   // q obtendrá todos los clientes
 		    	                  //esta peticon redirije a otra pagina.
+		    	                   ListarTodosControllerEjb todos= new ListarTodosControllerEjb();
+		    	                   ArrayList<Cliente> clientes=todos.listarTodos();
+		    	                   request.setAttribute("clientes", clientes);
+		    	                   titulo="Listado general de clientes";
 		    	                  break;
 		     case "buscarPorNombre": // se invocará al controlador que haga
 		    	                     // la consulta por nombre, que obtendrá
 		    	                     // solo los clientes que coincidan con el nombre buscado
 		    	                     // esta peticion redirije a otra pagina
+		    	                   titulo="Resultado de la búsqueda por nombre";
 		    	                   break;  	                  
 		 }
 		  // tengo q redirigir hacia una vista jsp para mostrar los clientes
-		   
 		 RequestDispatcher  rd; 
 		 // de laguna manera haya q enviarle a la vista el resultado de la consulta a la
 		  // base de datos.... 
-		 //this.getServletContext().getRequestDispatcher("/jsp" +"listarTodos.jsp").forward(request, response);;
 		 rd = request.getRequestDispatcher("/jsp/listarTodos.jsp");
+		 request.setAttribute("iva", new Integer(21)); 
+		 request.setAttribute("titulo", titulo);
 		 rd.forward(request, response);
 		}
 

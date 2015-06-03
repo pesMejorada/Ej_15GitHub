@@ -21,10 +21,10 @@
      
      <table>
         <tr>
-           <th>ID:</th>
-           <th>Nombre</th>
-           <th>Apellido DA IGUAL!! :))</th>
-           <th>DNI:</th>
+           <th>ID</th>
+           <th>Nombres</th>
+           <th>Apellidos</th>
+           <th>DNI</th>
           </tr>
         <%for(Cliente c: clientes){ %>  
           <tr>

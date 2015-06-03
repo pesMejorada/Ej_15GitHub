@@ -48,6 +48,10 @@ public class TiendaServlet extends HttpServlet {
 		 String titulo = "Sin título";
 		 RequestDispatcher  rd; 
 		 switch(action){
+		      case "altaCliente":
+						    	  rd = request.getRequestDispatcher("/archivosHtml/altaClienteView.html");
+				                  rd.forward(request, response);
+		    	                  break;
 		     case  "listarTodos":  // se invocará al controllador adecuado
 		    	                   // q obtendrá todos los clientes
 		    	                  //esta peticon redirije a otra pagina.
@@ -65,7 +69,7 @@ public class TiendaServlet extends HttpServlet {
 		    	                     // esta peticion redirije a otra pagina
 		    	                   titulo="Resultado de la búsqueda por nombre";
 		    	                   request.setAttribute("titulo", titulo);
-		    	                   rd = request.getRequestDispatcher("/jsp/listarTodos.jsp");
+		    	                   rd = request.getRequestDispatcher("/jsp/buscarPorNombre.jsp");
 		    	                   rd.forward(request, response);
 		    	                   break;  	                  
 		 }

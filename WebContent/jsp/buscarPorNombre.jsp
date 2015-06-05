@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../css/estilos.css"/>
 </head>
 <body>
-   <form method="get"  action="${pageContext.request.contextPath}/Tienda/buscarPorNombre" name="buscarPorNombre" >
+   <form method="post"  action="${pageContext.request.contextPath}/Tienda/buscarPorNombre" name="buscarPorNombre" >
     <fieldset>
      <label>Nombre:</label>
      <input type="text" name="nombre" id="nombre"/>

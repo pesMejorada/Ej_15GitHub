@@ -150,11 +150,37 @@ public class ClienteDaoJdbc implements ClienteDao{
 	}
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		try {
+			//.establecer conexioi
+			abrirConexion();
+			//2. preparar las sentencias
+			PreparedStatement ps= cx.prepareStatement("DELETE FROM CLIENTE WHERE ID =?");
+			//2.1. especificar loq  va en ?
+			ps.setInt(1, id);
+			//3. eJECUTAR LA SENTENCIA
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			 // 4. cerrar la conexio
+			cerrarConexion();
+		}
+		
 		
 	}
     
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

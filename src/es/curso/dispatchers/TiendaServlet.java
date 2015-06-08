@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+import es.curso.controllers.EliminarController;
 import es.curso.controllers.ejb.BuscarPorNombreControllerEjb;
 import es.curso.controllers.ejb.DarAltaClienteControllerEjb;
+import es.curso.controllers.ejb.EliminarControllerEjb;
 import es.curso.controllers.ejb.ListarTodosControllerEjb;
 import es.curso.model.entity.Cliente;
 
@@ -71,7 +75,12 @@ public class TiendaServlet extends HttpServlet {
 		    	                    
 		    	                   rd = request.getRequestDispatcher("/jsp/buscarPorNombre.jsp");
 		    	                   rd.forward(request, response);
-		    	                   break;  	                  
+		    	                   break;  
+		     case "eliminarPorId":
+		    	                   rd= request.getRequestDispatcher("/jsp/eliminarPorId.jsp");
+		    	                   rd.forward(request, response);
+		    	                   break;
+		      	                   
 		 }
 		  // No HAY NADA....
 		 
@@ -108,13 +117,33 @@ public class TiendaServlet extends HttpServlet {
 			                  // mandarle un título diferente
 			                    request.setAttribute("titulo","Búsqueda por " + cadenaNombre);
 			                   // y redirigir hacia el jsp ListarTodos
-			                    rd=request.getRequestDispatcher("/jsp/listarTodos.jsp");
-			                    rd.forward(request, response);
+			                   rd=request.getRequestDispatcher("/jsp/listarTodos.jsp");
+			                   rd.forward(request, response);
 			                  
+			                  break;
+		case "eliminarPorId":
+			                  // recuperar el id tecleado en el el form
+			                  int id = Integer.parseInt(request.getParameter("id"));
+			                  // llamar al controlador
+			                  EliminarController eliminarEjb = new EliminarControllerEjb();
+			                  eliminarEjb.eliminar(id);
+                              response.sendRedirect("/Ej_15GitHub/Tienda/listarTodos");
 			                  break;
 	   }
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

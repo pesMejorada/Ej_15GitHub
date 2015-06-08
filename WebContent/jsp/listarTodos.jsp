@@ -25,14 +25,23 @@
            <th>Nombres</th>
            <th>Apellidos</th>
            <th>DNI</th>
+           <th></th>
+           
           </tr>
         <%for(Cliente c: clientes){ %>  
-          <tr>
-             <td><%= c.getId() %></td>
+         <form action="${pageContext.request.contextPath}/Tienda/eliminarPorId"  method="post">
+          <tr id="<%= c.getId()%>">
+             <td><input type="text"  name="id" value ="<%= c.getId() %>" /></td>
              <td><%= c.getNombres() %></td>
              <td><%= c.getApellidos() %></td>
              <td><%= c.getDni() %></td>
+               <td><input class="btnSinBordes" 
+	               type="submit" value="Eliminar"
+	                 name="btn<%= c.getId()%>"/> 
+               </td>
+            
           </tr>
+        </form>
         <% } %>
      </table>
  </body>

@@ -28,3 +28,20 @@ td ,th{
      padding: 3px;
      width:10%;
 }
+.btnSinBordes{
+	border: 0em;
+	background: transparent;
+	text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+

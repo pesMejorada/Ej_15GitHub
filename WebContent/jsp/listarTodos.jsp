@@ -9,6 +9,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Listado de Cliente</title>
 <link rel="stylesheet" href="../css/estilos.css"/>
+	
+	<script type="text/javascript">
+	  function enviar(boton){
+		 
+		   var formulario= document.getElementById("formulario" +boton.name.substring(3));
+		   // alterar el action según el botón pulsado
+		    if(boton.value=="Actualizar")
+		    	formulario.action="${pageContext.request.contextPath}/Tienda/actualizar";
+		    if(boton.value=="Eliminar")
+		    		formulario.action=
+		    			"${pageContext.request.contextPath}/Tienda/eliminarPorId";
+		    formulario.submit();	
+	  }
+	
+	
+	</script>
+
+
+
+
 </head>
 <body>
       <h1><%= request.getAttribute("titulo") %>    </h1>
@@ -29,19 +49,24 @@
            
           </tr>
         <%for(Cliente c: clientes){ %>  
-         <form action="${pageContext.request.contextPath}/Tienda/eliminarPorId"  method="post">
+          <form id ="formulario<%= c.getId()%>" action="#"  method="post" onsubmit="return false;">
           <tr id="<%= c.getId()%>">
              <td><input type="text"  name="id" value ="<%= c.getId() %>" /></td>
-             <td><%= c.getNombres() %></td>
-             <td><%= c.getApellidos() %></td>
-             <td><%= c.getDni() %></td>
+             <td><input type="text" name="nombres" value="<%= c.getNombres() %>"  /></td>
+             <td><input type="text" name="apellidos" value="<%= c.getApellidos() %>" /></td>
+             <td><input type="text" name="dni" value="<%= c.getDni() %>"/></td>
                <td><input class="btnSinBordes" 
 	               type="submit" value="Eliminar"
-	                 name="btn<%= c.getId()%>"/> 
+	                 name="btn<%= c.getId()%>" onclick="enviar(this);"/> 
                </td>
-            
+               <td><input class="btnSinBordes" 
+                   type="submit" value="Actualizar"
+                     name="btn<%= c.getId()%>" onclick="enviar(this);"/> 
+               </td>
+              
           </tr>
         </form>
+       
         <% } %>
      </table>
  </body>

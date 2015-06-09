@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+import es.curso.controllers.ActualizarController;
 import es.curso.controllers.EliminarController;
+import es.curso.controllers.ejb.ActualizarControllerEjb;
 import es.curso.controllers.ejb.BuscarPorNombreControllerEjb;
 import es.curso.controllers.ejb.DarAltaClienteControllerEjb;
 import es.curso.controllers.ejb.EliminarControllerEjb;
@@ -129,9 +133,39 @@ public class TiendaServlet extends HttpServlet {
 			                  eliminarEjb.eliminar(id);
                               response.sendRedirect("/Ej_15GitHub/Tienda/listarTodos");
 			                  break;
+		case "actualizar":   // recuperar los datos del formulario 
+			                 int idCliente = Integer.parseInt(request.getParameter("id")); 
+			                 String nombresCliente = request.getParameter("nombres");
+			                 String apellidosCliente = request.getParameter("apellidos");
+			                 String dniCliente= request.getParameter("dni");
+			                 Cliente clienteModif = 
+			                		 new Cliente(idCliente, nombresCliente, apellidosCliente, dniCliente);
+			                 ActualizarController actualizarEjb = new ActualizarControllerEjb();
+			                 actualizarEjb.actualizar(clienteModif);
+			                 response.sendRedirect("/Ej_15GitHub/Tienda/listarTodos");
+			                 
+			                 break;
+		                
 	   }
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

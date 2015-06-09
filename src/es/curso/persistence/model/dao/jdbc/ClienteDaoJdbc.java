@@ -145,8 +145,28 @@ public class ClienteDaoJdbc implements ClienteDao{
 	}
 	@Override
 	public void update(Cliente cliente) {
-		// TODO Auto-generated method stub
-		
+		try {
+			// 1. establecer la conexion
+			abrirConexion();
+			// 2. preparar la sentnecia
+			PreparedStatement ps = cx.prepareStatement(
+				   "UPDATE CLIENTE SET NOMBRES=?, APELLIDOS=?, DNI= ? WHERE ID =?");
+		    // 2.1. RELLENAR LOS ?
+				ps.setString(1, cliente.getNombres());
+				ps.setString(2, cliente.getApellidos());
+				ps.setString(3, cliente.getDni());
+				ps.setInt(4, cliente.getId());
+		   // 3. Ejecutar la sentencia
+				ps.executeUpdate();
+		   		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			//4.cerrar conexion
+			cerrarConexion();
+		}
 	}
 	@Override
 	public void delete(Integer id) {

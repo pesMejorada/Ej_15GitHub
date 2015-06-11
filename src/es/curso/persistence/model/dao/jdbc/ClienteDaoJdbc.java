@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.transaction.Transaction;
+
 import es.curso.model.entity.Cliente;
 import es.curso.persistence.model.dao.ClienteDao;
 
@@ -38,7 +40,14 @@ public class ClienteDaoJdbc implements ClienteDao{
 			        // Esta instrución devuelve como resultado el número de
 			        // registros (o filas) afectadas.
 			  // 3.1 hacer le commit... 
+			  cx.commit();
 		} catch (SQLException e) {
+			try {
+				cx.rollback();
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -91,8 +100,8 @@ public class ClienteDaoJdbc implements ClienteDao{
 						"rootTienda",
 						"rootTienda"
 						);
-				//3. iniciar el autoCommit en false
-				//cx.setAutoCommit(false);
+				//3. iniciar el autoCommit en false para gestionar TRANSACCIONES
+				cx.setAutoCommit(false);
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();
@@ -158,9 +167,15 @@ public class ClienteDaoJdbc implements ClienteDao{
 				ps.setInt(4, cliente.getId());
 		   // 3. Ejecutar la sentencia
 				ps.executeUpdate();
-		   		
+		  // 3.1. hacer el commitc
+				cx.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				cx.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 		finally{
@@ -171,16 +186,24 @@ public class ClienteDaoJdbc implements ClienteDao{
 	@Override
 	public void delete(Integer id) {
 		try {
-			//.establecer conexioi
+			//.establecer conexion
 			abrirConexion();
+			
 			//2. preparar las sentencias
 			PreparedStatement ps= cx.prepareStatement("DELETE FROM CLIENTE WHERE ID =?");
 			//2.1. especificar loq  va en ?
 			ps.setInt(1, id);
 			//3. eJECUTAR LA SENTENCIA
 			ps.executeUpdate();
+			// 3.1 hacer el commit
+			cx.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				cx.rollback();
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		} finally{
 			 // 4. cerrar la conexio

@@ -19,14 +19,22 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+import javax.servlet.http.HttpSession;
+
 import es.curso.controllers.ActualizarController;
 import es.curso.controllers.EliminarController;
+import es.curso.controllers.LoginController;
 import es.curso.controllers.ejb.ActualizarControllerEjb;
 import es.curso.controllers.ejb.BuscarPorNombreControllerEjb;
 import es.curso.controllers.ejb.DarAltaClienteControllerEjb;
 import es.curso.controllers.ejb.EliminarControllerEjb;
 import es.curso.controllers.ejb.ListarTodosControllerEjb;
+import es.curso.controllers.ejb.LoginControllerEjb;
 import es.curso.model.entity.Cliente;
+import es.curso.model.entity.Usuario;
 
 /**
  * Servlet implementation class TiendaServlet
@@ -60,7 +68,7 @@ public class TiendaServlet extends HttpServlet {
 		 switch(action){
 		     case "altaCliente": // se debe redirigir hacia el formulario altaCliente
 		    	 
-		    	                  rd= request.getRequestDispatcher("/archivosHtml/altaClienteView.html");
+		    	                  rd= request.getRequestDispatcher("/jsp/altaCliente.jsp");
 		    	                  rd.forward(request, response);  
 		                          break;
 		     case  "listarTodos":  // se invocará al controllador adecuado
@@ -84,6 +92,11 @@ public class TiendaServlet extends HttpServlet {
 		    	                   rd= request.getRequestDispatcher("/jsp/eliminarPorId.jsp");
 		    	                   rd.forward(request, response);
 		    	                   break;
+		    	                   
+		     case "login":
+				                 rd= request.getRequestDispatcher("/login.jsp");
+				                 rd.forward(request, response);
+				                 break;	                   
 		      	                   
 		 }
 		  // No HAY NADA....
@@ -108,7 +121,7 @@ public class TiendaServlet extends HttpServlet {
 			                 // invocará al controlador adecuado
 			                 DarAltaClienteControllerEjb controlador= new DarAltaClienteControllerEjb();
 			                 controlador.agregar(cliente);
-			                 rd = request.getRequestDispatcher("/index.html");
+			                 rd = request.getRequestDispatcher("/index.jsp");
 			        		 rd.forward(request, response);
 			                break;
 		case "buscarPorNombre":// recuperar la cadena tecleada en el formulario
@@ -145,9 +158,64 @@ public class TiendaServlet extends HttpServlet {
 			                 response.sendRedirect("/Ej_15GitHub/Tienda/listarTodos");
 			                 
 			                 break;
+	         
+		case "login":        // recuperar los datos del formulario
+			                 String userName = request.getParameter("userName");
+			                 String password = request.getParameter("password");
+			                 // invocra la controlador adecuador
+			                 LoginController loginController = new LoginControllerEjb();
+			                 Usuario usuario = loginController.login(userName,password);
+			                 if(usuario!=null){
+			                	 //   Si el usuario existe... meter los datos de ese usuario en la sesion
+			                	 HttpSession session = request.getSession(false);
+			                	 session = request.getSession(true);
+			                   	// aqui tengo q rellenar los datos del usuario
+			                	 String nombreCompleto = usuario.getNombres() + " " + usuario.getApellidos();
+			                	 session.setAttribute("nombreCompleto", nombreCompleto);
+			                	 session.setAttribute("userName", usuario.getUserName());
+			                	 rd = request.getRequestDispatcher("/index.jsp");
+				        		 rd.forward(request, response);
+			                	 
+			                 }else{
+			                	 // si no existe redirigir hacía login otra vez 
+			                	 response.sendRedirect("login");
+			                 }
+			                break;
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
+			                 
 		                
 	   }
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 

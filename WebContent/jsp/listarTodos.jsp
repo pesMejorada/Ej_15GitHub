@@ -3,13 +3,8 @@
 <%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Listado de Cliente</title>
-<link rel="stylesheet" href="../css/estilos.css"/>
-	
+    
+<%@ include file="../template/header.jsp" %>
 	<script type="text/javascript">
 	  function enviar(boton){
 		 
@@ -22,15 +17,7 @@
 		    			"${pageContext.request.contextPath}/Tienda/eliminarPorId";
 		    formulario.submit();	
 	  }
-	
-	
 	</script>
-
-
-
-
-</head>
-<body>
       <h1><%= request.getAttribute("titulo") %>    </h1>
      <!--  tabla html   dinámicamente -->
          
@@ -69,17 +56,7 @@
        
         <% } %>
      </table>
- </body>
-</html>
-
-
-
-
-
-
-
-
-
+     <%@ include file="../template/footer.jsp" %>
 
 
 
